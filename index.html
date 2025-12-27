@@ -21,6 +21,20 @@
             min-height: 100vh;
             overflow: hidden;
             position: relative;
+            cursor: default;
+        }
+
+        /* Traînée violette du curseur */
+        .cursor-trail {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background: rgba(200, 150, 255, 0.6);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 10px rgba(200, 150, 255, 0.8);
         }
 
         /* Effet de particules/étoiles en arrière-plan */
@@ -47,6 +61,22 @@
             50% { opacity: 1; }
         }
 
+        /* Lignes de grille subtiles en arrière-plan */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(200, 150, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(200, 150, 255, 0.02) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
         .container {
             text-align: center;
             z-index: 10;
@@ -64,8 +94,27 @@
                 0 0 40px rgba(200, 150, 255, 0.6),
                 0 0 70px rgba(200, 150, 255, 0.4),
                 0 0 80px rgba(200, 150, 255, 0.3);
-            animation: glow 2s ease-in-out infinite alternate;
+            animation: glow 3s ease-in-out infinite alternate;
             margin-bottom: 80px;
+            position: relative;
+        }
+
+        /* Ligne décorative sous le titre */
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(200, 150, 255, 0.8), transparent);
+            animation: lineExpand 3s ease-in-out infinite;
+        }
+
+        @keyframes lineExpand {
+            0%, 100% { width: 100px; }
+            50% { width: 300px; }
         }
 
         @keyframes glow {
@@ -91,15 +140,36 @@
         .links {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 12px;
             align-items: center;
         }
 
         .section-title {
-            font-size: 1.2rem;
-            color: #888;
-            margin: 20px 0 10px;
+            font-size: 1rem;
+            color: #666;
+            margin: 25px 0 15px;
             font-style: italic;
+            position: relative;
+        }
+
+        /* Petites lignes décoratives autour des section titles */
+        .section-title::before,
+        .section-title::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 30px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #666);
+        }
+
+        .section-title::before {
+            right: 110%;
+        }
+
+        .section-title::after {
+            left: 110%;
+            background: linear-gradient(90deg, #666, transparent);
         }
 
         .links a {
@@ -108,14 +178,29 @@
             font-size: 1.3rem;
             transition: all 0.3s ease;
             position: relative;
-            padding: 5px 0;
+            padding: 8px 20px;
             font-style: italic;
+            border-radius: 4px;
         }
 
         .links a::before {
             content: '/';
-            margin-right: 5px;
+            margin-right: 8px;
             color: #666;
+            transition: color 0.3s ease;
+        }
+
+        /* Bordure subtile qui apparaît au hover */
+        .links a::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            transition: all 0.3s ease;
         }
 
         .links a:hover {
@@ -124,21 +209,34 @@
                 0 0 10px rgba(255, 255, 255, 0.8),
                 0 0 20px rgba(200, 150, 255, 0.6);
             transform: translateX(10px);
+            background: rgba(200, 150, 255, 0.03);
         }
 
-        .links a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, #fff, transparent);
-            transition: width 0.3s ease;
+        .links a:hover::before {
+            color: rgba(200, 150, 255, 0.8);
         }
 
         .links a:hover::after {
-            width: 100%;
+            border-color: rgba(200, 150, 255, 0.3);
+            box-shadow: 0 0 15px rgba(200, 150, 255, 0.2);
+        }
+
+        /* Badge "NEW" ou "LIVE" optionnel */
+        .badge {
+            display: inline-block;
+            font-size: 0.6rem;
+            padding: 2px 6px;
+            margin-left: 8px;
+            border: 1px solid rgba(200, 150, 255, 0.5);
+            border-radius: 3px;
+            color: rgba(200, 150, 255, 0.8);
+            font-style: normal;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
         }
 
         /* Responsive */
@@ -149,6 +247,11 @@
             
             .links a {
                 font-size: 1.1rem;
+            }
+
+            .section-title::before,
+            .section-title::after {
+                display: none;
             }
         }
 
@@ -180,7 +283,7 @@
     <script>
         // Créer des étoiles aléatoires
         const starsContainer = document.getElementById('stars');
-        const numberOfStars = 100;
+        const numberOfStars = 150;
 
         for (let i = 0; i < numberOfStars; i++) {
             const star = document.createElement('div');
@@ -192,27 +295,40 @@
             starsContainer.appendChild(star);
         }
 
-        // Effet de curseur glow
+        // Traînée violette du curseur
+        const trails = [];
+        const maxTrails = 15;
+
         document.addEventListener('mousemove', (e) => {
-            const glow = document.createElement('div');
-            glow.style.position = 'fixed';
-            glow.style.left = e.clientX + 'px';
-            glow.style.top = e.clientY + 'px';
-            glow.style.width = '5px';
-            glow.style.height = '5px';
-            glow.style.background = 'rgba(200, 150, 255, 0.5)';
-            glow.style.borderRadius = '50%';
-            glow.style.pointerEvents = 'none';
-            glow.style.transform = 'translate(-50%, -50%)';
-            glow.style.boxShadow = '0 0 20px rgba(200, 150, 255, 0.8)';
-            glow.style.zIndex = '1';
-            document.body.appendChild(glow);
+            // Créer une nouvelle particule de traînée
+            const trail = document.createElement('div');
+            trail.className = 'cursor-trail';
+            trail.style.left = e.clientX + 'px';
+            trail.style.top = e.clientY + 'px';
+            document.body.appendChild(trail);
             
+            trails.push(trail);
+            
+            // Animer la disparition
             setTimeout(() => {
-                glow.style.transition = 'opacity 0.5s';
-                glow.style.opacity = '0';
-                setTimeout(() => glow.remove(), 500);
-            }, 100);
+                trail.style.transition = 'opacity 0.5s, transform 0.5s';
+                trail.style.opacity = '0';
+                trail.style.transform = 'translate(-50%, -50%) scale(0.5)';
+            }, 50);
+            
+            // Supprimer après l'animation
+            setTimeout(() => {
+                trail.remove();
+                trails.shift();
+            }, 550);
+            
+            // Limiter le nombre de traînées
+            if (trails.length > maxTrails) {
+                const oldTrail = trails.shift();
+                if (oldTrail && oldTrail.parentNode) {
+                    oldTrail.remove();
+                }
+            }
         });
     </script>
 </body>
