@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hiimafemboy.wav</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000000;
+            color: #ffffff;
+            font-family: 'Courier New', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Effet de particules/étoiles en arrière-plan */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
+        }
+
+        .container {
+            text-align: center;
+            z-index: 10;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 5rem;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+            text-shadow: 
+                0 0 10px rgba(255, 255, 255, 0.8),
+                0 0 20px rgba(255, 255, 255, 0.6),
+                0 0 30px rgba(255, 255, 255, 0.4),
+                0 0 40px rgba(200, 150, 255, 0.6),
+                0 0 70px rgba(200, 150, 255, 0.4),
+                0 0 80px rgba(200, 150, 255, 0.3);
+            animation: glow 2s ease-in-out infinite alternate;
+            margin-bottom: 80px;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 
+                    0 0 10px rgba(255, 255, 255, 0.8),
+                    0 0 20px rgba(255, 255, 255, 0.6),
+                    0 0 30px rgba(255, 255, 255, 0.4),
+                    0 0 40px rgba(200, 150, 255, 0.6),
+                    0 0 70px rgba(200, 150, 255, 0.4);
+            }
+            to {
+                text-shadow: 
+                    0 0 20px rgba(255, 255, 255, 1),
+                    0 0 30px rgba(255, 255, 255, 0.8),
+                    0 0 40px rgba(255, 255, 255, 0.6),
+                    0 0 50px rgba(200, 150, 255, 0.8),
+                    0 0 80px rgba(200, 150, 255, 0.6),
+                    0 0 100px rgba(200, 150, 255, 0.4);
+            }
+        }
+
+        .links {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            color: #888;
+            margin: 20px 0 10px;
+            font-style: italic;
+        }
+
+        .links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 1.3rem;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 5px 0;
+            font-style: italic;
+        }
+
+        .links a::before {
+            content: '/';
+            margin-right: 5px;
+            color: #666;
+        }
+
+        .links a:hover {
+            color: #fff;
+            text-shadow: 
+                0 0 10px rgba(255, 255, 255, 0.8),
+                0 0 20px rgba(200, 150, 255, 0.6);
+            transform: translateX(10px);
+        }
+
+        .links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #fff, transparent);
+            transition: width 0.3s ease;
+        }
+
+        .links a:hover::after {
+            width: 100%;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 3rem;
+            }
+            
+            .links a {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    
+    <div class="container">
+        <h1>hiimafemboy.wav</h1>
+        
+        <div class="links">
+            <div class="section-title">&lt; link &gt;</div>
+            <a href="/sucas-leaderboard">sucas-leaderboard</a>
+            <a href="/starlight-client">starlight-client</a>
+            <a href="/gradient-text">gradient-text</a>
+            <a href="/kaleido-tools">kaleido-tools</a>
+            <a href="/sucas-level">sucas-level</a>
+            <div class="section-title">&lt; /link &gt;</div>
+        </div>
+    </div>
+
+    <script>
+        // Créer des étoiles aléatoires
+        const starsContainer = document.getElementById('stars');
+        const numberOfStars = 100;
+
+        for (let i = 0; i < numberOfStars; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 3 + 's';
+            star.style.opacity = Math.random() * 0.5 + 0.2;
+            starsContainer.appendChild(star);
+        }
+
+        // Effet de curseur glow
+        document.addEventListener('mousemove', (e) => {
+            const glow = document.createElement('div');
+            glow.style.position = 'fixed';
+            glow.style.left = e.clientX + 'px';
+            glow.style.top = e.clientY + 'px';
+            glow.style.width = '5px';
+            glow.style.height = '5px';
+            glow.style.background = 'rgba(200, 150, 255, 0.5)';
+            glow.style.borderRadius = '50%';
+            glow.style.pointerEvents = 'none';
+            glow.style.transform = 'translate(-50%, -50%)';
+            glow.style.boxShadow = '0 0 20px rgba(200, 150, 255, 0.8)';
+            glow.style.zIndex = '1';
+            document.body.appendChild(glow);
+            
+            setTimeout(() => {
+                glow.style.transition = 'opacity 0.5s';
+                glow.style.opacity = '0';
+                setTimeout(() => glow.remove(), 500);
+            }, 100);
+        });
+    </script>
+</body>
+</html>
